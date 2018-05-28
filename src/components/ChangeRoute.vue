@@ -1,7 +1,7 @@
 <template>
 <div>
   <section>
-    <input v-bind:value="stopNumber" v-on:input="$emit('input', $event.target.value)">
+    <input v-bind:value="stopNumber" v-on:input="$emit('input', $event.target.value)" placeholder="stopNumber">
   </section>
 </div>
 </template>

@@ -5,7 +5,12 @@
   </section>
 
   <section v-else>
-    <h2>Current route: {{ stopNumber }}</h2>
+    <h2>Current route: {{ stopNumber }}</h2> <button @click="addAsFavourite">Add as Favourite</button>
+
+    <div v-for="stop in favouriteStops" :key="stop">
+      <button @click="this.stopNumber = stop">Show stop {{ stop }}</button>
+    </div>
+
     <div v-if="loading">Loading...</div>
 
     <div v-else v-for="bus in info" :key="bus.arrivaldatetime" class="bus">
@@ -19,6 +24,10 @@
       <span class="lighten" v-if="bus.duetime > 1">
         {{ bus.duetime }} minutes
       </span>
+    </div>
+
+    <div class="cta-refresh">
+      <button @click="getBuses">Refresh</button>
     </div>
 
   </section>
@@ -35,6 +44,7 @@ export default {
     return {
       info: null,
       loading: true,
+      favouriteStops: [],
       errored: false
     }
   },
@@ -43,6 +53,7 @@ export default {
   ],
   methods: {
     getBuses: function () {
+      this.loading = true
       axios
         .get('https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + this.stopNumber + '&format=json')
         .then(response => {
@@ -53,6 +64,10 @@ export default {
           console.log(error)
           this.errored = true
         })
+    },
+    addAsFavourite: function () {
+      this.favouriteStops.push(this.stopNumber)
+      localStorage.setItem('rtpiFavouriteStops', JSON.stringify(this.favouriteStops))
     }
   },
   watch: {
@@ -64,6 +79,9 @@ export default {
   mounted () {
     this.getBuses()
     this.$options.interval = setInterval(this.getBuses, 60000)
+    if (localStorage.getItem('rtpiFavouriteStops')) {
+      this.favouriteStops = JSON.parse(localStorage.getItem('rtpiFavouriteStops'))
+    }
   }
 }
 </script>
