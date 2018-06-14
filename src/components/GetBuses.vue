@@ -5,10 +5,11 @@
   </section>
 
   <section v-else>
-    <h2>Current route: {{ stopNumber }}</h2> <button @click="addAsFavourite">Add as Favourite</button>
+    <h2>Current route: {{ currentStop }}</h2> <button @click="addAsFavourite">Add as Favourite</button>
 
     <div v-for="stop in favouriteStops" :key="stop">
-      <button @click="this.stopNumber = stop">Show stop {{ stop }}</button>
+      <button @click="currentStop = stop">Show stop {{ stop }}</button>
+      <button @click="removeFavourite(stop)">Remove stop {{ stop }}</button>
     </div>
 
     <div v-if="loading">Loading...</div>
@@ -45,6 +46,7 @@ export default {
       info: null,
       loading: true,
       favouriteStops: [],
+      currentStop: this.stopNumber,
       errored: false
     }
   },
@@ -55,7 +57,7 @@ export default {
     getBuses: function () {
       this.loading = true
       axios
-        .get('https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + this.stopNumber + '&format=json')
+        .get('https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + this.currentStop + '&format=json')
         .then(response => {
           this.info = response.data.results
           this.loading = false
@@ -66,13 +68,23 @@ export default {
         })
     },
     addAsFavourite: function () {
-      this.favouriteStops.push(this.stopNumber)
+      this.favouriteStops.push(this.currentStop)
       localStorage.setItem('rtpiFavouriteStops', JSON.stringify(this.favouriteStops))
+    },
+    removeFavourite: function (removedStop) {
+      const favouriteStopIndex = this.favouriteStops.indexOf(removedStop)
+      if (favouriteStopIndex > -1) {
+        this.favouriteStops.splice(favouriteStopIndex, 1)
+      }
+      localStorage.removeItem('rtpiFavouriteStops', JSON.stringify(removedStop))
     }
   },
   watch: {
     stopNumber: _.debounce(function () {
-      console.log(this.stopNumber)
+      this.currentStop = this.stopNumber
+      this.getBuses()
+    }, 1000),
+    currentStop: _.debounce(function () {
       this.getBuses()
     }, 1000)
   },
