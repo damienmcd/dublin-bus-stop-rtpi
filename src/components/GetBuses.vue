@@ -83,9 +83,9 @@ export default {
     stopNumber: _.debounce(function () {
       this.currentStop = this.stopNumber
     }, 1000),
-    currentStop: _.debounce(function () {
+    currentStop: function () {
       this.getBuses()
-    }, 1000)
+    }
   },
   mounted () {
     this.getBuses()
