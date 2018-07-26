@@ -3,6 +3,8 @@
     <h1>Dublin Bus RTPI Info</h1>
     <change-route v-model="stopNumber"></change-route>
     <get-buses :stopNumber="stopNumber"></get-buses>
+
+    <!-- <p>{{ store.state.storeStopNumber }}</p> -->
   </div>
 </template>
 
