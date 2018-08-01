@@ -6,12 +6,16 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     storeStopNumber: 1234
-  }
-  // getters: {},
-  // mutations: {
-  //   updateStopNumber (state, stopNumber) {
-  //     state.storeStopNumber = stopNumber
-  //   }
-  // },
-  // actions: {}
+  },
+  getters: {
+    getStopNumber (state) {
+      return state.storeStopNumber
+    }
+  },
+  mutations: {
+    updateStopNumber (state, newStopNumber) {
+      state.storeStopNumber = newStopNumber
+    }
+  },
+  actions: {}
 })

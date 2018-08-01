@@ -5,10 +5,10 @@
   </section>
 
   <section v-else>
-    <h2>Current route: {{ currentStop }}</h2> <button @click="addAsFavourite">Add as Favourite</button>
+    <h2>Current route: {{ this.$store.state.storeStopNumber }}</h2> <button @click="addAsFavourite">Add as Favourite</button>
 
     <div v-for="stop in favouriteStops" :key="stop">
-      <button @click="currentStop = stop">Show stop {{ stop }}</button>
+      <button @click="this.$store.state.storeStopNumber = stop">Show stop {{ stop }}</button>
       <button @click="removeFavourite(stop)">Remove stop {{ stop }}</button>
     </div>
 
@@ -37,7 +37,7 @@
 
 <script>
 import axios from 'axios'
-import _ from 'lodash'
+// import _ from 'lodash'
 
 export default {
   name: 'get-buses',
@@ -46,18 +46,14 @@ export default {
       info: null,
       loading: true,
       favouriteStops: [],
-      currentStop: this.stopNumber,
       errored: false
     }
   },
-  props: [
-    'stopNumber'
-  ],
   methods: {
     getBuses: function () {
       this.loading = true
       axios
-        .get('https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + this.currentStop + '&format=json')
+        .get('https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + this.stopNumber + '&format=json')
         .then(response => {
           this.info = response.data.results
           this.loading = false
@@ -68,7 +64,7 @@ export default {
         })
     },
     addAsFavourite: function () {
-      this.favouriteStops.push(this.currentStop)
+      this.favouriteStops.push(this.$store.state.storeStopNumber)
       localStorage.setItem('rtpiFavouriteStops', JSON.stringify(this.favouriteStops))
     },
     removeFavourite: function (removedStop) {
@@ -79,31 +75,17 @@ export default {
       localStorage.removeItem('rtpiFavouriteStops', JSON.stringify(removedStop))
     }
   },
-  watch: {
-    stopNumber: _.debounce(function () {
-      this.currentStop = this.stopNumber
-    }, 1000),
-    currentStop: function () {
-      this.getBuses()
-    }
-  },
   mounted () {
     this.getBuses()
     this.$options.interval = setInterval(this.getBuses, 60000)
     if (localStorage.getItem('rtpiFavouriteStops')) {
       this.favouriteStops = JSON.parse(localStorage.getItem('rtpiFavouriteStops'))
     }
+  },
+  computed: {
+    stopNumber () {
+      return this.$store.state.storeStopNumber
+    }
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
