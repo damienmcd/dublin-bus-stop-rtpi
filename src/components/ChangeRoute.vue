@@ -1,13 +1,15 @@
 <template>
 <div>
   <section>
-    <input class="bus-input" :value="stopNumber" @input="updateStopNumber" placeholder="stopNumber">
-    <button class="btn-go" :value="stopNumber" @click="updateStopNumber">Go</button>
+    <label for="stop-input" class="bus-input-label">Input Stop Number</label>
+    <input id="stop-input" class="bus-input" :value="stopNumber" @input="updateStopNumber" placeholder="Input stop number">
+    <button class="btn btn-go" :value="stopNumber" @click="updateStopNumber">Go</button>
   </section>
 </div>
 </template>
 
 <script>
+
 export default {
   name: 'change-route',
   data () {
@@ -18,8 +20,6 @@ export default {
     updateStopNumber (e) {
       this.$store.commit('updateStopNumber', e.target.value)
     }
-  },
-  mounted () {
   },
   computed: {
     stopNumber () {

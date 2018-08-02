@@ -125,9 +125,27 @@ h2 {
 }
 
 .bus-input {
+  display: block;
+  width: 100%;
+  max-width: 250px;
   height: 40px;
+  margin: 5px auto 10px;
   padding: 5px 2%;
   font-size: 12px;
+  border: solid 1px var(--dark-grey);
+}
+
+.bus-input-label {
+  display: block;
+  font-weight: 600;
+}
+
+.btn-go {
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin: 0px auto 40px;
+  padding: 0px 10px;
 }
 
 </style>

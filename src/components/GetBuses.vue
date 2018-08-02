@@ -5,7 +5,7 @@
   </section>
 
   <section v-else>
-    <h2>Current route: {{ this.$store.state.storeStopNumber }}</h2> <button class="btn btn-fav-add" @click="addAsFavourite">Add as Favourite</button>
+    <h2>Current stop: {{ this.$store.state.storeStopNumber }}</h2> <button class="btn btn-fav-add" @click="addAsFavourite">Add as Favourite</button>
 
     <div v-for="stop in favouriteStops" :key="stop">
       <button class="btn btn-util btn-fav-show" @click="changeStopNumber(stop)">Show stop {{ stop }}</button>
@@ -15,8 +15,7 @@
     <div v-if="loading">Loading...</div>
 
     <div v-else class="bus-list">
-      <!-- <div v-for="(bus, index) in busTimes" :key="bus.arrivaldatetime" :class="{'bus bus-grey': index % 2 === 0 }"> -->
-      <div v-for="(bus, index) in busTimes" :key="bus.arrivaldatetime" :class="[(index % 2 === 0) ? 'bus bus-light-grey' : '', 'bus']">
+      <div v-for="(bus, index) in busTimes" :key="bus.arrivaldatetime" :class="[(index % 2 === 0) ? 'bus bus-light-grey' : 'bus']">
         {{ bus.route }}: Towards {{ bus.destination }}
         <span class="lighten" v-if="bus.duetime === 'Due'">
           is Due Now
@@ -40,7 +39,7 @@
 
 <script>
 import axios from 'axios'
-// import _ from 'lodash'
+import _ from 'lodash'
 
 export default {
   name: 'get-buses',
@@ -55,7 +54,6 @@ export default {
   methods: {
     changeStopNumber: function (showStop) {
       this.$store.commit('updateStopNumber', showStop)
-      this.getBuses()
     },
     getBuses: function () {
       this.loading = true
@@ -81,6 +79,11 @@ export default {
       }
       localStorage.removeItem('rtpiFavouriteStops', JSON.stringify(removedStop))
     }
+  },
+  watch: {
+    stopNumber: _.debounce(function () {
+      this.getBuses()
+    }, 500)
   },
   mounted () {
     this.getBuses()
