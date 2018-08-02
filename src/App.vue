@@ -30,6 +30,7 @@ export default {
 
 :root {
   --grey: #e5e5e5;
+  --light-grey: #eeeeee;
   --dark-grey: #222222;
   --dark-grey-hover: #444444;
   --yellow: #ffdf5f;
@@ -57,10 +58,11 @@ body {
 .app-wrapper {
   width: 100%;
   max-width: 500px;
-  margin: 60px auto;
+  margin: 20px auto;
   padding: 20px 5% 40px;
   background-color: var(--yellow);
   border: solid 1px var(--dark-grey);
+  box-shadow: 0px 0px 10px 5px #ccc; /* Horizontal, Vertical, Blur, Spread, Colour */
 }
 
 h1 {
@@ -105,13 +107,20 @@ h1 {
   margin: 10px auto;
   background-color: white;
   font-weight: 600;
+  border: solid 1px var(--dark-grey);
 }
 
 .bus {
   padding: 10px 5%;
 }
-.bus-grey {
-  background-color: var(--grey);
+.bus-light-grey {
+  background-color: var(--light-grey);
+}
+
+.bus-input {
+  height: 40px;
+  padding: 5px 2%;
+  font-size: 12px;
 }
 
 </style>

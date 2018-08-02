@@ -15,7 +15,8 @@
     <div v-if="loading">Loading...</div>
 
     <div v-else class="bus-list">
-      <div v-for="bus in info" :key="bus.arrivaldatetime" class="bus {'grey': $index % 2 === 0 }">
+      <!-- <div v-for="(bus, index) in busTimes" :key="bus.arrivaldatetime" :class="{'bus bus-grey': index % 2 === 0 }"> -->
+      <div v-for="(bus, index) in busTimes" :key="bus.arrivaldatetime" :class="[(index % 2 === 0) ? 'bus bus-light-grey' : '', 'bus']">
         {{ bus.route }}: Towards {{ bus.destination }}
         <span class="lighten" v-if="bus.duetime === 'Due'">
           is Due Now
@@ -45,7 +46,7 @@ export default {
   name: 'get-buses',
   data () {
     return {
-      info: null,
+      busTimes: null,
       loading: true,
       favouriteStops: [],
       errored: false
@@ -57,7 +58,7 @@ export default {
       axios
         .get('https://data.smartdublin.ie/cgi-bin/rtpi/realtimebusinformation?stopid=' + this.stopNumber + '&format=json')
         .then(response => {
-          this.info = response.data.results
+          this.busTimes = response.data.results
           this.loading = false
         })
         .catch(error => {

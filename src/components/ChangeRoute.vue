@@ -1,7 +1,7 @@
 <template>
 <div>
   <section>
-    <input :value="stopNumber" @input="updateStopNumber" placeholder="stopNumber">
+    <input class="bus-input" :value="stopNumber" @input="updateStopNumber" placeholder="stopNumber">
   </section>
 </div>
 </template>
