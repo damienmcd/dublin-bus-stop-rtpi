@@ -8,7 +8,7 @@
     <h2>Current route: {{ this.$store.state.storeStopNumber }}</h2> <button class="btn btn-fav-add" @click="addAsFavourite">Add as Favourite</button>
 
     <div v-for="stop in favouriteStops" :key="stop">
-      <button class="btn btn-util btn-fav-show" @click="this.$store.state.storeStopNumber = stop">Show stop {{ stop }}</button>
+      <button class="btn btn-util btn-fav-show" @click="changeStopNumber(stop)">Show stop {{ stop }}</button>
       <button class="btn btn-util btn-fav-remove" @click="removeFavourite(stop)">Remove stop {{ stop }}</button>
     </div>
 
@@ -53,6 +53,10 @@ export default {
     }
   },
   methods: {
+    changeStopNumber: function (showStop) {
+      this.$store.commit('updateStopNumber', showStop)
+      this.getBuses()
+    },
     getBuses: function () {
       this.loading = true
       axios

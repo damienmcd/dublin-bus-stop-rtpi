@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="app-wrapper">
-    <h1>Dublin Bus RTPI Info</h1>
+    <h1>Dublin Bus RTPI</h1>
     <change-route></change-route>
     <get-buses></get-buses>
   </div>
@@ -93,10 +93,6 @@ h2 {
     cursor: pointer;
   }
 }
-// .btn:hover, .btn:active, .btn:focus {
-//   background-color: var(--dark-grey-hover);
-//   cursor: pointer;
-// }
 
 .btn-util {
   width: auto;

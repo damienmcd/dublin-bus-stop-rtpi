@@ -2,6 +2,7 @@
 <div>
   <section>
     <input class="bus-input" :value="stopNumber" @input="updateStopNumber" placeholder="stopNumber">
+    <button class="btn-go" :value="stopNumber" @click="updateStopNumber">Go</button>
   </section>
 </div>
 </template>
