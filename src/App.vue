@@ -26,7 +26,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 
 :root {
   --grey: #e5e5e5;
@@ -70,6 +70,12 @@ h1 {
   text-transform: uppercase;
 }
 
+h2 {
+  // font-size: 16px;
+  color: var(--dark-grey);
+  text-transform: uppercase;
+}
+
 .btn {
   display: block;
   margin: 10px auto 10px;
@@ -81,11 +87,16 @@ h1 {
   font-weight: 600;
   border: none;
   transition: all 0.2s ease-out;
+
+  &:hover, &:active, &:focus {
+    background-color: var(--dark-grey-hover);
+    cursor: pointer;
+  }
 }
-.btn:hover, .btn:active, .btn:focus {
-  background-color: var(--dark-grey-hover);
-  cursor: pointer;
-}
+// .btn:hover, .btn:active, .btn:focus {
+//   background-color: var(--dark-grey-hover);
+//   cursor: pointer;
+// }
 
 .btn-util {
   width: auto;
@@ -124,9 +135,3 @@ h1 {
 }
 
 </style>
-
-
-
-
-
-
