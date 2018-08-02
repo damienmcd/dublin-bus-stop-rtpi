@@ -77,7 +77,8 @@ export default {
       if (favouriteStopIndex > -1) {
         this.favouriteStops.splice(favouriteStopIndex, 1)
       }
-      localStorage.removeItem('rtpiFavouriteStops', JSON.stringify(removedStop))
+      localStorage.removeItem('rtpiFavouriteStops')
+      localStorage.setItem('rtpiFavouriteStops', JSON.stringify(this.favouriteStops))
     }
   },
   watch: {
