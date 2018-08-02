@@ -5,30 +5,32 @@
   </section>
 
   <section v-else>
-    <h2>Current route: {{ this.$store.state.storeStopNumber }}</h2> <button @click="addAsFavourite">Add as Favourite</button>
+    <h2>Current route: {{ this.$store.state.storeStopNumber }}</h2> <button class="btn btn-fav-add" @click="addAsFavourite">Add as Favourite</button>
 
     <div v-for="stop in favouriteStops" :key="stop">
-      <button @click="this.$store.state.storeStopNumber = stop">Show stop {{ stop }}</button>
-      <button @click="removeFavourite(stop)">Remove stop {{ stop }}</button>
+      <button class="btn btn-util btn-fav-show" @click="this.$store.state.storeStopNumber = stop">Show stop {{ stop }}</button>
+      <button class="btn btn-util btn-fav-remove" @click="removeFavourite(stop)">Remove stop {{ stop }}</button>
     </div>
 
     <div v-if="loading">Loading...</div>
 
-    <div v-else v-for="bus in info" :key="bus.arrivaldatetime" class="bus">
-      {{ bus.route }}: Towards {{ bus.destination }}
-      <span class="lighten" v-if="bus.duetime === 'Due'">
-        is Due Now
-      </span>
-      <span class="lighten" v-else-if="bus.duetime == 1">
-        {{ bus.duetime }} minute
-      </span>
-      <span class="lighten" v-if="bus.duetime > 1">
-        {{ bus.duetime }} minutes
-      </span>
+    <div v-else class="bus-list">
+      <div v-for="bus in info" :key="bus.arrivaldatetime" class="bus {'grey': $index % 2 === 0 }">
+        {{ bus.route }}: Towards {{ bus.destination }}
+        <span class="lighten" v-if="bus.duetime === 'Due'">
+          is Due Now
+        </span>
+        <span class="lighten" v-else-if="bus.duetime == 1">
+          {{ bus.duetime }} minute
+        </span>
+        <span class="lighten" v-if="bus.duetime > 1">
+          {{ bus.duetime }} minutes
+        </span>
+      </div>
     </div>
 
     <div class="cta-refresh">
-      <button @click="getBuses">Refresh</button>
+      <button class="btn" @click="getBuses">Refresh</button>
     </div>
 
   </section>

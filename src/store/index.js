@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    storeStopNumber: 1234
+    storeStopNumber: 3656
   },
   getters: {
     getStopNumber (state) {
