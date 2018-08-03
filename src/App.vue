@@ -124,20 +124,36 @@ h2 {
   background-color: var(--light-grey);
 }
 
+.bus-input-wrapper {
+  position: relative;
+  display: block;
+}
+
 .bus-input {
   display: block;
   width: 100%;
   max-width: 250px;
   height: 40px;
   margin: 5px auto 10px;
-  padding: 5px 2%;
-  font-size: 12px;
+  padding: 22px 2% 14px;
+  font-size: 14px;
+  line-height: 40px;
+  text-align: center;
   border: solid 1px var(--dark-grey);
 }
 
 .bus-input-label {
+  position: absolute;
   display: block;
+  width: auto;
+  max-width: 250px;
+  left: 50%;
+  transform: translateX(-50%);
+  // left: 0px;
+  top: 1px;
   font-weight: 600;
+  font-size: 10px;
+  z-index: 10;
 }
 
 .btn-go {
